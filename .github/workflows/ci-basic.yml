@@ -1,0 +1,44 @@
+name: CI - Model Training (Basic)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'MLProject/**'
+  workflow_dispatch:
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Set up job
+      run: echo "Starting model training job..."
+      
+    - name: Run actions/checkout@v3
+      uses: actions/checkout@v3
+      
+    - name: Set up Python 3.12.7
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12.7'
+        
+    - name: Check Env
+      run: |
+        python --version
+        pip --version
+        
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install mlflow==2.19.0 pandas numpy scikit-learn matplotlib seaborn
+        
+    - name: Run mlflow project
+      run: |
+        cd MLProject
+        mlflow run . --no-conda
+        
+    - name: Get latest MLflow run id
+      run: |
+        cd MLProject
+        echo "Training completed successfully"

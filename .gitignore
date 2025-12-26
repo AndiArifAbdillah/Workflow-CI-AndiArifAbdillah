@@ -1,0 +1,14 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+.Python
+venv/
+.venv/
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# IDE
+.vscode/
+.idea/
