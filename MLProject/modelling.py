@@ -4,6 +4,7 @@ Author: Andi Arif Abdillah
 Description: Train model with manual MLflow logging and hyperparameter tuning
 """
 
+import os
 import pandas as pd
 import numpy as np
 import mlflow
@@ -84,7 +85,11 @@ def train_model_with_tuning():
     """Train model with hyperparameter tuning and manual MLflow logging"""
     
     # Set MLflow tracking URI
-    mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+    import os
+    if os.environ.get("GITHUB_ACTIONS"):
+        mlflow.set_tracking_uri("file:./mlruns")
+    else:
+        mlflow.set_tracking_uri("http://127.0.0.1:5000/")
     
     # Set experiment
     mlflow.set_experiment("Iris Classification - Andi Arif Abdillah")
